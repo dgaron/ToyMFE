@@ -1,7 +1,7 @@
 # ToyMFE
 
 ### v1
-This is the original version of the program
+* This is the original version of the program
 
 ### mod2
 * Memory allocation reduced from N^2 to 2N
