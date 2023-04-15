@@ -2,7 +2,7 @@ CFLAGS = -O3  -std=c99  -I/usr/include/malloc/
 LIBRARIES = -lm
 CC ?= gcc
 
-TASKS = v1 mod2 Nmem tile
+TASKS = v1 mod2 Nmem tile tile-mod2
 PLAIN_TARGETS = $(TASKS:%=ToyMFE-%)
 VERIFY_RAND_TARGETS = $(PLAIN_TARGETS:%=%.verify_rand)
 
