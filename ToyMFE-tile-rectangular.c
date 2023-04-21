@@ -108,10 +108,11 @@ inline double __min_double(double x, double y){
 //Memory Macros
 #define A(i) A[i]
 #define B(i) B[i]
-#define T(i,j) T[MOD(i,2)][j]
+#define T(i,j) T[-(i)+(j)]
 
 //Tiling Macros
-#define BLOCK_SIZE 4000
+#define BLOCK_SIZE_ii 100
+#define BLOCK_SIZE_jj 4000
 
 void ToyMFE(long N, long* A, long* B, long* last){
 	///Parameter checking
@@ -120,15 +121,8 @@ void ToyMFE(long N, long* A, long* B, long* last){
 		exit(-1);
 	}
 	//Memory Allocation
-	long mz1, mz2;
-	
-	long* _lin_T = (long*)malloc(sizeof(long)*(2 * N));
-	mallocCheck(_lin_T, (2 * N), long);
-	long** T = (long**)malloc(sizeof(long*)*2);
-	mallocCheck(T, 2, long*);
-	for (mz1=0;mz1 < 2; mz1++) {
-		T[mz1] = &_lin_T[(mz1*(N))];
-	}
+	long* T = (long*)malloc(sizeof(long*)*(N));
+	mallocCheck(T, (N), long);
 
 	#define S0(i,j) T(i,j) = (A(i))+(B(j))
 	#define S1(i,j) T(i,j) = (T(i,j-1))+(B(j))
@@ -147,20 +141,20 @@ void ToyMFE(long N, long* A, long* B, long* last){
 		S0((0),(0));
 
 		// Tiled portion
-		for (ii = 1; ii < N - 2; ii += BLOCK_SIZE) {
-			for (jj = ii; jj < N - 1; jj += BLOCK_SIZE) {
+		for (ii = 1; ii < N - 2; ii += BLOCK_SIZE_ii) {
+			for (jj = ii; jj < N - 1; jj += BLOCK_SIZE_jj) {
 				if (ii == 1 && (N >= 2)) {
 					{
-						for(c2=jj; c2 <= min(jj + BLOCK_SIZE, N - 1); c2+=1)
+						for(c2=jj; c2 <= min(jj + BLOCK_SIZE_jj, N - 1); c2+=1)
 						{
 							S1((0),(c2));
 						}
 					}
 				}
-				for(c1=ii; c1 <= min(ii + BLOCK_SIZE, N - 2); c1+=1)
+				for(c1=ii; c1 <= min(ii + BLOCK_SIZE_ii, N - 2); c1+=1)
 				{
 					S2((c1),(c1));
-					for(c2=c1+1; c2 <= min(jj + BLOCK_SIZE, N - 1); c2+=1)
+					for(c2=c1+1; c2 <= min(jj + BLOCK_SIZE_jj, N - 1); c2+=1)
 					{
 						S3((c1),(c2));
 					}

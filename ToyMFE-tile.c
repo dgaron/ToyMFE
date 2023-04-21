@@ -111,7 +111,7 @@ inline double __min_double(double x, double y){
 #define T(i,j) T[-(i)+(j)]
 
 //Tiling Macros
-#define BLOCK_SIZE 4000
+#define BLOCK_SIZE 1000
 
 void ToyMFE(long N, long* A, long* B, long* last){
 	///Parameter checking
